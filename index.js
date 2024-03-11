@@ -1,4 +1,6 @@
 require('dotenv').config();
+const path = require('path');
+
 const express = require('express');
 const mongoose = require('mongoose');
 const Book = require('./models/books')
@@ -24,8 +26,10 @@ connectDB().then(()=>{
     })
 })
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/', (req, res) =>{
-    res.send({title: "books"});
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 })
 
 app.get('/add-note', async(req,res)=>{
@@ -53,3 +57,5 @@ app.get('/book', async(req, res) =>{
         res.send("Someting went wrong");
     }
 })
+
+// https://cute-blue-kitten-cuff.cyclic.app
